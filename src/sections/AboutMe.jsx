@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 export function About() {
     return (
-        <section className="h-screen max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-space-between gap-12 px-6 lg:px-12 text-xl">
+        <section className="min-h-screen py-20 max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-space-between gap-12 px-6 lg:px-12 text-xl">
             {/* Left Content */}
             <motion.div
                 initial={{ opacity: 0, x: -100 }}
@@ -79,7 +79,7 @@ export function About() {
                 transition={{ duration: 0.8, ease: 'easeInOut' }}
                 viewport={{ once: false }}
                 className="flex-1 flex justify-center mt-10 lg:mt-0">
-                <div className="relative w-74 h-74 rounded-full overflow-hidden border-4 border-purple-500/30 shadow-lg shadow-purple-500/20 hover:scale-130 transition-transform duration-500">
+                <div className="relative w-60 h-60 lg:w-74 lg:h-74 rounded-full overflow-hidden border-4 border-purple-500/30 shadow-lg shadow-purple-500/20 hover:scale-110 transition-transform duration-500">
                     <img
                         src="/avt_img.gif"
                         alt="Le Tien Duc"

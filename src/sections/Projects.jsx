@@ -115,7 +115,7 @@ export function Projects({ projects, certificates }) {
                                                 <i className="fa-solid fa-list-check mr-2"></i>Features
                                             </button>
                                             <div
-                                                className="absolute bottom-full mb-3 right-0 w-74 p-4 
+                                                className="absolute bottom-full mb-3 right-0 w-64 sm:w-74 p-4 
                                                             bg-slate-800 border border-slate-700 rounded-lg shadow-xl 
                                                             opacity-0 scale-95 invisible group-hover:opacity-100 
                                                             group-hover:scale-100 group-hover:visible 

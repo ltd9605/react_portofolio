@@ -16,7 +16,7 @@ export function Home() {
                     </div>
 
                     <h1
-                        className="mb-6"
+                        className="mb-6 text-4xl sm:text-5xl font-bold"
                     >
                         Hi, I'm{' '}
                         <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
@@ -25,13 +25,13 @@ export function Home() {
                     </h1>
 
                     <h2
-                        className="mb-6 text-muted-foreground"
+                        className="mb-6 text-lg sm:text-xl text-muted-foreground"
                     >
                         Software engineering & Full Stack Developer
                     </h2>
 
                     <p
-                        className="mb-8 text-muted-foreground max-w-2xl mx-auto"
+                        className="mb-8 text-base text-muted-foreground max-w-2xl mx-auto"
                     >
                         I craft beautiful, functional web experiences with a focus on clean code,
                         user experience, and modern technologies. Let's build something amazing together.
