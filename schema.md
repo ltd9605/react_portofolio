@@ -16,7 +16,7 @@ json links:
 {
   "demo": "",
   "visit": "",
-  "github": "https://github.com/ltd9605/ams_desktop_application"
+  "github": "..."
 }
 
 ## Table `certificates`
@@ -36,7 +36,7 @@ json links:
 | `links` | `json` |  Nullable |
  json links:
 {
-  "verify": "https://www.coursera.org/account/accomplishments/verify/RYG212F1NOKZ"
+  "verify": "..."
 }
 
 ## Table `Message`
