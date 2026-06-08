@@ -1,90 +1,95 @@
 import { motion } from 'motion/react';
+import { MonitorSmartphone, Server, Palette, Cloud, Bot } from 'lucide-react';
+
 const skillCategories = [
     {
         id: 1,
-        title: 'Frontend Development',
-        skills: ['HTML5/CSS', 'React', 'Next.js', 'Tailwind CSS', 'Bootstrap', 'Java Swing'],
+        title: 'Frontend',
+        icon: <MonitorSmartphone size={24} />,
+        skills: ['React.js', 'Next.js', 'Tailwind CSS', 'Java Swing/FX'],
     },
     {
         id: 2,
-        title: 'Backend Development',
-        skills: ['Node.js', 'Express.js', 'Java', 'NonSQL', 'SQL', 'MongoDB'],
+        title: 'Backend',
+        icon: <Server size={24} />,
+        skills: ['Express.js', 'Spring Boot', 'PostgreSQL', 'MongoDB'],
     },
     {
         id: 3,
         title: 'UI/UX Design',
-        skills: ['Figma', 'Canvas', 'Responsive Design',],
+        icon: <Palette size={24} />,
+        skills: ['Figma', 'Canva'],
     },
     {
         id: 4,
         title: 'DevOps & Cloud',
-        skills: ['Netlify', 'Docker', 'CI/CD'],
+        icon: <Cloud size={24} />,
+        skills: ['Netlify', 'Docker', 'AWS'],
     },
     {
         id: 5,
-        title: 'AI Tools & Others',
-        skills: ['GPT', 'Gemini', 'Compilot'],
+        title: 'AI & Tools',
+        icon: <Bot size={24} />,
+        skills: ['Chat GPT', 'Gemini', 'Claude', 'Github', 'Postman'],
     },
 ];
 
 export function Skills() {
     return (
-        <section className="py-20 px-4  text-white">
-            <div className="max-w-6xl mx-auto">
+        <section className="py-20 px-4 min-h-screen flex flex-col justify-center relative">
+            <div className="max-w-7xl mx-auto w-full">
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeInOut' }}
-                    viewport={{ once: false }}
-                    className="text-center mb-12">
-                    <h2 className="text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
-                        Skills & Expertise
+                    transition={{ duration: 0.8, ease: 'easeOut' }}
+                    viewport={{ once: true }}
+                    className="text-center mb-16"
+                >
+                    <h2 className="text-3xl md:text-5xl font-bold font-outfit mb-4 text-[var(--text-primary)]">
+                        My <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[#06b6d4]">Arsenal</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        I specialize in modern web technologies and continuously expand my skill set
-                        to stay current with industry trends.
+                    <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
+                        Technologies and tools I use to bring ideas to life.
                     </p>
                 </motion.div>
 
-                {/* Skill Cards */}
-                <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeInOut' }}
-                    viewport={{ once: false }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {skillCategories.map((category) => (
-                        <div
+                {/* Skill Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000">
+                    {skillCategories.map((category, index) => (
+                        <motion.div
                             key={category.id}
-                            className="group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-[#1a1a2e]/60 to-[#16213e]/60 p-6 transition-all duration-500 hover:shadow-[0_0_20px_rgba(147,51,234,0.3)] hover:border-purple-500/40"
+                            initial={{ opacity: 0, rotateX: -10, y: 50 }}
+                            whileInView={{ opacity: 1, rotateX: 0, y: 0 }}
+                            transition={{ duration: 0.6, delay: index * 0.1, ease: 'easeOut' }}
+                            viewport={{ once: true }}
+                            whileHover={{ scale: 1.05, rotateY: 5, rotateX: 5 }}
+                            className="glass-card rounded-2xl p-8 relative overflow-hidden group preserve-3d cursor-pointer border border-[var(--glass-border)]"
                         >
-                            {/* Glow background effect */}
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-700/20 via-transparent to-blue-700/20 blur-xl" />
+                            {/* Glow Background */}
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[var(--accent)]/10 via-transparent to-blue-500/10 blur-xl" />
 
-                            {/* Content */}
                             <div className="relative z-10">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className="p-3 rounded-lg bg-purple-500/20">
-                                        <i className="fa-solid fa-code text-purple-400 text-lg"></i>
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div className="p-4 rounded-xl bg-[var(--accent)]/10 text-[var(--accent)] group-hover:scale-110 transition-transform duration-300 shadow-[var(--inner-glow)]">
+                                        {category.icon}
                                     </div>
-                                    <h3 className="text-lg font-semibold">{category.title}</h3>
+                                    <h3 className="text-xl font-bold text-[var(--text-primary)] font-outfit">{category.title}</h3>
                                 </div>
-                                <ul className="space-y-2">
+                                <div className="flex flex-wrap gap-2">
                                     {category.skills.map((skill) => (
-                                        <li
+                                        <span
                                             key={skill}
-                                            className="text-gray-400 flex items-center gap-2 hover:text-purple-300 transition-colors duration-200"
+                                            className="px-3 py-1.5 text-sm font-medium rounded-lg glass-panel text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors duration-300 hover:bg-[var(--accent)] hover:text-white"
                                         >
-                                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
                                             {skill}
-                                        </li>
+                                        </span>
                                     ))}
-                                </ul>
+                                </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
-                </motion.div>
+                </div>
             </div>
         </section>
     );

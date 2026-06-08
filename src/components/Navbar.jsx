@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTheme } from './ThemeProvider';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { theme, setTheme } = useTheme();
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+            setIsScrolled(window.scrollY > 20);
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -21,72 +24,84 @@ export function Navbar() {
         { label: 'Contact', href: '#contact' },
     ];
 
+    const toggleTheme = () => {
+        setTheme(theme === 'dark' ? 'light' : 'dark');
+    };
+
     return (
         <>
-            <nav
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || isMobileMenuOpen
-                        ? 'bg-black/80 backdrop-blur-lg border-b border-border'
-                        : ''
-                    }`}
+            <motion.nav
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+                className={`fixed top-4 left-0 right-0 z-50 mx-auto max-w-5xl transition-all duration-500 rounded-full ${
+                    isScrolled ? 'glass-panel px-6 py-3' : 'bg-transparent px-6 py-4'
+                }`}
             >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16">
-                        {/* Logo */}
-                        <a
-                            href="#home"
-                            className="font-bold text-2xl bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
-                            style={{ fontFamily: 'var(--logo-font)' }}
-                        >
-                            Silvester
-                        </a>
+                <div className="flex items-center justify-between">
+                    {/* Logo */}
+                    <a
+                        href="#home"
+                        className="font-bold text-2xl font-momo text-[var(--accent)] hover:text-[var(--accent-hover)] transition-colors"
+                        style={{ fontFamily: 'var(--font-momo)' }}
+                    >
+                        Silvester
+                    </a>
 
-                        {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center gap-8">
-                            {navItems.map((item) => (
-                                <a
-                                    key={item.label}
-                                    href={item.href}
-                                    className="text-muted-foreground hover:text-foreground transition-colors"
-                                >
-                                    {item.label}
-                                </a>
-                            ))}
-                        </div>
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex items-center gap-6">
+                        {navItems.map((item) => (
+                            <a
+                                key={item.label}
+                                href={item.href}
+                                className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors relative group"
+                            >
+                                {item.label}
+                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--accent)] transition-all duration-300 group-hover:w-full"></span>
+                            </a>
+                        ))}
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        {/* Theme Toggle Button */}
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2 rounded-full bg-[var(--glass-bg)] border border-[var(--glass-border)] text-[var(--text-primary)] hover:scale-110 hover:shadow-lg transition-all duration-300 preserve-3d"
+                            aria-label="Toggle theme"
+                        >
+                            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                        </button>
 
                         {/* Mobile Menu Button */}
                         <div className="md:hidden">
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
+                                className="p-2 rounded-full bg-[var(--glass-bg)] border border-[var(--glass-border)] text-[var(--text-primary)]"
                                 aria-label="Toggle mobile menu"
                             >
-                                {isMobileMenuOpen ? (
-                                    <i className="fa-solid fa-xmark text-2xl"></i>
-                                ) : (
-                                    <i className="fa-solid fa-bars text-2xl"></i>
-                                )}
+                                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                             </button>
                         </div>
                     </div>
                 </div>
-            </nav>
+            </motion.nav>
 
             {/* Mobile Menu (Dropdown) */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.2, ease: 'easeInOut' }}
-                        className="fixed top-16 left-0 right-0 z-40 bg-black/90 backdrop-blur-lg md:hidden"
+                        initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                        className="fixed top-24 left-4 right-4 z-40 glass-card rounded-2xl md:hidden overflow-hidden"
                     >
-                        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                        <div className="px-4 py-6 space-y-2">
                             {navItems.map((item) => (
                                 <a
                                     key={item.label}
                                     href={item.href}
-                                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                                    className="block px-4 py-3 rounded-xl text-base font-medium text-[var(--text-primary)] hover:bg-[var(--accent)] hover:text-white transition-all duration-300"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     {item.label}

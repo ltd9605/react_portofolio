@@ -1,34 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Momo+Signature&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Momo+Signature&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-/* :root định nghĩa global */
-:root {
-  --logo-font: "Momo Signature", cursive;
-  --main-font: "TASA Orbiter", sans-serif;
-  --dark-bg: #000000ef;
-  /* Màu nền xanh tối chính */
-  --dark-accent: #000000;
-  /* Màu xanh tối phụ (cho card, nav) */
-  --light-text: #ccd6f6;
-  /* Màu chữ sáng (chính) */
-  --secondary-text: #8892b0;
-  /* Màu chữ phụ */
-  --accent-color: #a78bfa;
-  /* Màu nhấn (cyan/mint) */
+@theme {
+  --font-outfit: "Outfit", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-momo: "Momo Signature", cursive;
+}
 
-  /* Thiết lập font */
-  font-family: var(--main-font);
-  line-height: 1.5;
-  font-weight: 400;
-  scroll-behavior: smooth;
+:root {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --accent: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --shadow-3d: 5px 5px 15px rgba(0, 0, 0, 0.05), -5px -5px 15px rgba(255, 255, 255, 0.8);
+  --inner-glow: inset 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+.dark {
+  --bg-primary: #030014;
+  --bg-secondary: #0b0524;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent: #a78bfa;
+  --accent-hover: #8b5cf6;
+  --glass-bg: rgba(3, 0, 20, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --shadow-3d: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(167, 139, 250, 0.15);
+  --inner-glow: inset 0 0 0 1px rgba(255,255,255,0.1);
 }
 
 body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-inter);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
-  background-color: var(--dark-bg);
-  color: var(--light-text);
-  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-outfit);
 }
 
 main {
@@ -38,19 +54,45 @@ main {
   margin: 0 auto;
 }
 
-/* Hiệu ứng animation chung cho các link */
+/* Glass & 3D Utility Classes */
+.glass-card {
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-3d);
+}
+
+.glass-panel {
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-3d);
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.perspective-1000 {
+  perspective: 1000px;
+}
+.perspective-container {
+  perspective: 1200px;
+}
+
 a {
   transition: all 0.3s ease;
 }
 
 a:hover {
   filter: brightness(1.2);
-  text-shadow: 0 0 5px var(--accent-color);
+  text-shadow: 0 0 5px var(--accent);
   transform: translateY(-3px);
 }
 
 button {
-  transition: transform 0.3 ease;
+  transition: transform 0.3s ease;
 }
 
 button:hover {

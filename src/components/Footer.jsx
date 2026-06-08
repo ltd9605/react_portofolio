@@ -5,7 +5,7 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                     <div>
                         <h3 className="mb-4 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                            Sivester
+                            Silvester
                         </h3>
                         <p className="text-muted-foreground">
                             Building digital experiences that make a difference.

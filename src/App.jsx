@@ -2,71 +2,70 @@ import { useState, useEffect } from 'react'
 
 
 import './App.css'
-import { supabase } from './config/supabaseClient'
+import { getProjects, getCertificates } from './services/api'
 import { Navbar } from "./components/Navbar"
 import { Footer } from "./components/Footer"
-import { WelcomePreloader } from './components/loading'
+import { WelcomePreloader } from './components/Loading'
 import { Background } from './components/Background'
 import { Home } from './sections/Home'
 import { About } from './sections/AboutMe'
 import { Projects } from './sections/Projects'
 import { Skills } from './sections/Skills'
 import { Contact } from './sections/Contact'
+import { ThemeProvider } from './components/ThemeProvider'
 function App() {
   // 
   const [projects, setProjects] = useState([])
   const [certificates, setCertificates] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [dataLoaded, setDataLoaded] = useState(false)
+  const [entered, setEntered] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [projectRes, certificateRes] = await Promise.all([
-          supabase.from('projects').select('*'),
-          supabase.from('certificates').select('*'),
+        const [projectsData, certificatesData] = await Promise.all([
+          getProjects(),
+          getCertificates(),
         ])
 
-        if (projectRes.error) throw projectRes.error
-        if (certificateRes.error) throw certificateRes.error
-
-        setProjects(projectRes.data)
-        setCertificates(certificateRes.data)
+        setProjects(projectsData)
+        setCertificates(certificatesData)
       } catch (error) {
         console.error('Lỗi khi lấy dữ liệu:', error)
       } finally {
-        setTimeout(() => {
-          setLoading(false)
-        }, 1500);
+        setDataLoaded(true)
       }
     }
 
     fetchData();
   }, []);
-
-  if (loading) return <WelcomePreloader />
+  console.log("data:", projects);
+  if (!entered) return <WelcomePreloader isReady={dataLoaded} onEnter={() => setEntered(true)} />
   return (
-    <>
-      <Background />
-      <Navbar />
-      <main className="relative z-10">
-        <section id="home">
-          <Home />
-        </section>
-        <section id='about'>
-          <About />
-        </section>
-        <section id="projects">
-          <Projects projects={projects} certificates={certificates} />
-        </section>
+    <ThemeProvider defaultTheme="dark" storageKey="portfolio-ui-theme">
+      <>
+        <Background />
+        <Navbar />
+        <main className="relative z-10">
+          <section id="home">
+            <Home />
+          </section>
+          <section id='about'>
+            <About />
+          </section>
+          <section id="projects">
+            <Projects projects={projects} certificates={certificates} />
+          </section>
 
-        <section id="skills">
-          <Skills />
-        </section>
-        <section id="contact">
-          <Contact supabase={supabase} />
-        </section>
-      </main>
-      <Footer />
-    </>
+          <section id="skills">
+            <Skills />
+          </section>
+          <section id="contact">
+            <Contact />
+          </section>
+        </main>
+        <Footer />
+      </>
+    </ThemeProvider>
   )
 }
 
